@@ -3,6 +3,10 @@
 This Lua script is designed to assist with zone selection in PiggyZone using a graphical user interface (GUI). It parses an INI file containing zone connections and provides a user-friendly interface for selecting zones and executing commands.
 Support searching for zones located inside your (`MQ2PiggyZone.ini`) file.
 
+![guipiggy](https://github.com/spik3n/piggyzonehelper/assets/55240182/edc5fcaf-6998-4218-924f-15792f44f735)
+
+![searchpiggy](https://github.com/spik3n/piggyzonehelper/assets/55240182/c1d07ab7-7598-4bcd-97bd-b7196598f32e)
+
 ## Features
 
 - Parses an INI file (`MQ2PiggyZone.ini`) to obtain zone connections.
