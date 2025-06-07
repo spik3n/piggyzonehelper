@@ -6,12 +6,15 @@
 ------------------------------------------------------------
 local mq = require('mq')
 local imgui = require 'ImGui'
+local ffi = require("ffi")
 
 local zoneNames = {}
 local selectedZone = nil
-local searchText = "" 
-
 local isParsed = false
+
+local searchText = ""
+local inputFieldText = ""
+
 
 local function parseIniFile()
     print("Parsing INI file...")
@@ -62,8 +65,10 @@ local function executeCommand(zoneName, commandType)
 end
 
 local function displayZoneNames()
+    local searchLower = searchText:lower()
+    
     for _, zoneData in ipairs(zoneNames) do
-        if searchText == "" or zoneData.name:lower():find(searchText:lower(), 1, true) then
+        if searchText == "" or (zoneData.name and zoneData.name:lower():find(searchLower, 1, true)) then
             if imgui.Button(zoneData.name) then
                 selectedZone = zoneData
                 imgui.OpenPopup("Select Mode")
@@ -97,7 +102,22 @@ local function zoneSelectorGui(open)
         return open
     end
 
-    searchText = imgui.InputText("Search", searchText, 100)
+    --searchText = imgui.InputText("Search", searchText, 100)
+    imgui.Text("Search:")
+    imgui.SameLine()
+    
+    local previousInputText = inputFieldText
+    
+    inputFieldText = imgui.InputText("##search", previousInputText, 256)
+    
+    if inputFieldText ~= previousInputText then
+        searchText = inputFieldText
+    end
+    
+    if inputFieldText == "" and searchText ~= "" then
+        inputFieldText = searchText
+    end
+
     displayZoneNames()
 
     imgui.End()
